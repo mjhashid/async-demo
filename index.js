@@ -1,7 +1,8 @@
 console.log("Before");
 getUser(1, (user) => {
-  getRepositories(user.gitHubUsername, (repos) => {
+  getRepositories(user.gitHubUsername, (repos, status) => {
     console.log("Repos", repos);
+    console.log("Status", status);
   });
 });
 console.log("After");
@@ -22,6 +23,9 @@ function getUser(id, callback) {
 function getRepositories(username, callback) {
   setTimeout(() => {
     console.log("Calling GitHub API...");
-    callback(["repo1", "repo2", "repo3"]);
+    callback(["repo1", "repo2", "repo3"], {
+      name: "Momohjimoh Hashidu",
+      level: "Junior Developer",
+    });
   }, 2000);
 }
