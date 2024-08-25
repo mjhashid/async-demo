@@ -1,14 +1,19 @@
 console.log("Before");
-getUser(1, (user) => {
-  getRepositories(user.gitHubUsername, (repos, status) => {
-    console.log("Repos", repos);
-    console.log("Status", status);
-    getCommits(user.gitHubUsername, (details) => {
-      console.log("Profile", details[0].email, details[1]);
-    });
-  });
-});
+getUser(1, getRepositories);
 console.log("After");
+
+// Named Functions to Rescue callback Hell..
+function displayCommits(details) {
+  console.log(details[0].email, details[1]);
+}
+function getCommits(repos, status) {
+  console.log("Repos", repos, "Status", status);
+  getCommits(user.gitHubUsername, displayCommits);
+}
+function getRepositories(user) {
+  console.log(user);
+  getRepositories(user.gitHubUsername, getCommits);
+}
 
 // Three patterns of dealing with asynchronous
 
@@ -33,7 +38,7 @@ function getRepositories(username, callback) {
     });
   }, 2000);
 }
-
+// Function to get an array of commits...
 function getCommits(commit, callback) {
   setTimeout(() => {
     console.log("Loading Details...!");
