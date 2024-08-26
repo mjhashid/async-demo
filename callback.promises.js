@@ -10,8 +10,8 @@ console.log("Before");
 getUser(1)
   .then((user) => getRepositories(user.gitHubUsername))
   .then((repos) => getCommits(repos[0]))
-  .then((commits) => console.log("Commits:", commits))
-  .catch((err) => console.log("Error:", err.message));
+  .then((commits) => console.log("Commits:", commits));
+
 console.log("After");
 
 function getUser(id) {
@@ -32,10 +32,11 @@ function getRepositories(username) {
   });
 }
 
-function getCommits(repos) {
-  return new Promises((resolve, reject) => {
+function getCommits(repo) {
+  return new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve(["Two commits are made in repo1"]);
+      console.log("Calling GitHub API...");
+      resolve(["Making 2 commits in repo1"]);
     }, 2000);
   });
 }
