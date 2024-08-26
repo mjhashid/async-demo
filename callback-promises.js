@@ -1,16 +1,19 @@
 console.log("Before");
-// getUser(1, (user) => {
-//   getRepositories(user.gitHubUsername, (repos) => {
-//     console.log("Repos:", repos);
-//     getCommits(repos[0], (commits) => {
-//       console.log(commits);
-//     });
-//   });
-// });
+getUser(1, (user) => {
+  getRepositories(user.gitHubUsername, (repos) => {
+    console.log("Repos:", repos);
+    getCommits(repos[0], (commits) => {
+      console.log(commits);
+    });
+  });
+});
+
+// Using promises with then and catch clause...
 getUser(1)
   .then((user) => getRepositories(user.gitHubUsername))
   .then((repos) => getCommits(repos[0]))
-  .then((commits) => console.log("Commits:", commits));
+  .then((commits) => console.log("Commits:", commits))
+  .catch((err) => console.log("Error:", err.message));
 
 console.log("After");
 
